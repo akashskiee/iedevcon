@@ -1,9 +1,12 @@
 const express = require('express')
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const User = require('../../models/User');
+
 const {check, validationResult} = require('express-validator');
+const normalize = require('normalize-url');
+
 const Profile = require('../../models/Profile');
+const User = require('../../models/User');
 
 
 // GET API Current User Profile
@@ -51,17 +54,18 @@ router.post('/', [auth, [
         github            
     } = req.body;
 
-    const profileFields = {};
-    profileFields.user = req.user.id;
-    if(company) profileFields.company = company;
-    if(website) profileFields.website = website;
-    if(location) profileFields.location = location;
-    if(bio) profileFields.bio = bio;
-    if(status) profileFields.status = status;
-    if(githubusername) profileFields.githubusername = githubusername;
-    if(skills) {
-        profileFields.skills = skills.split(',').map(skill => skill.trim());
-    }
+    const profileFields = {
+        user: req.user.id,
+        company,
+        location,
+        website: website === '' ? '' : normalize(website, { forceHttps: true }),
+        bio,
+        skills: Array.isArray(skills)
+          ? skills
+          : skills.split(',').map(skill => ' ' + skill.trim()),
+        status,
+        githubusername
+      };
 
     //Social object
 
@@ -96,8 +100,52 @@ router.post('/', [auth, [
         res.status(500).send('Server Error');
     }
 
-    
-    res.send('Test');
-})
+});
+
+//GET All profile Public route
+
+router.get('/', async (req, res) => {
+    try {
+        const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+        res.json(profiles);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
+
+//GET   Public profile  by /api/profile/user/:user_id
+
+router.get('/user/:user_id', async (req, res) => {
+    try {
+        const profile = await Profile.findOne({user: req.params.user_id}).populate('user', ['name', 'avatar']);
+        if(!profile) res.status(400).json({msg: 'Profile not found'});
+        res.json(profile);
+    } catch (err) {
+        console.error(err.message);
+        if(err.name == 'CastError'){
+            return res.status(400).json({msg: 'Profile not found'});
+        }
+        res.status(500).send('Server error');
+    }
+});
+
+//DELETE  profile, User, Post 
+
+router.delete('/', auth, async (req, res) => {
+    try {
+        //Remove profile
+        await Profile.findOneAndRemove({user: req.params.user_id});
+        //
+        await User.findOneAndRemove({_id: req.params.user_id});
+        res.json({msg: 'User Deleted'});
+    } catch (err) {
+        console.error(err.message);
+        if(err.name == 'CastError'){
+            return res.status(400).json({msg: 'Profile not found'});
+        }
+        res.status(500).send('Server error');
+    }
+});
 
 module.exports = router;
