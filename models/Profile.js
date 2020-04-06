@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-
+ 
 const ProfileSchema = new mongoose.Schema({
-    user : {
-        type: mongoose.Schema.Types.ObjectId,
+    user: {
+        type: mongoose.Schema.ObjectId,
         ref: 'user'
     },
     company: {
@@ -18,76 +18,70 @@ const ProfileSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    skills : {
+    skills: {
         type: [String],
         required: true
     },
     bio: {
-        type: String  
+        type: String
     },
     githubusername: {
         type: String
     },
     experience: [
         {
-          title: {
+        title: {
             type: String,
             required: true
-          },
-          company: {
+        },
+        company: {
             type: String,
             required: true
-          },
-          location: {
+        },
+        location: {
             type: String
-          },
-          from: {
-            type: Date,
+        },
+        from: {
+            type: String,
             required: true
-          },
-          to: {
+        },
+        to: {
             type: Date
-          },
-          current: {
+        },
+        current: {
             type: Boolean,
             default: false
-          },
-          description: {
+        },
+        description: {
             type: String
-          }
-        }
-      ],
-      education: [
+        },
+    }],
+    education: [
         {
-          school: {
+        school: {
             type: String,
-            required: true
-          },
-          degree: {
+        },
+        degree: {
             type: String,
-            required: true
-          },
-          fieldofstudy: {
+        },
+        fieldofstudy: {
             type: String,
-            required: true
-          },
-          from: {
-            type: Date,
-            required: true
-          },
-          to: {
+        },
+        from: {
+            type: String,
+        },
+        to: {
             type: Date
-          },
-          current: {
+        },
+        current: {
             type: Boolean,
             default: false
-          },
-          description: {
+        },
+        description: {
             type: String
-          }
         }
-      ],
-      social: {
+    }],
+    social: {
         medium: {
           type: String
         },
@@ -107,10 +101,10 @@ const ProfileSchema = new mongoose.Schema({
             type: String
         }
       },
-      date: {
+    date: {
         type: Date,
         default: Date.now
-      }
+    }
 });
-
-module.exports = Profile = mongoose.model('profile', ProfileSchema);
+ 
+module.exports = Profile = mongoose.model('profile', ProfileSchema)
