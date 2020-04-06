@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
 const {check, validationResult} = require('express-validator');
 
 const User = require('../../models/User')
@@ -30,7 +32,7 @@ router.post('/',
         const avatar = gravatar.url(email, {
             s: '200',
             r: 'pg',
-            d: 'mm'
+            d: 'mm' 
         })
         user = new User({
             name,
@@ -45,7 +47,19 @@ router.post('/',
 
         await user.save();
 
-        res.send("User Registered");
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
+
+        jwt.sign(payload, process.env.JWT_SECRET,
+            {expiresIn: 36000},
+            (err, token) => {
+                if(err) throw err;
+                res.json({ token });
+            });
+
     } catch(err) {
         console.error(err.message);
         res.status(500).send("Server Error");
