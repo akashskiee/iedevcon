@@ -4,6 +4,8 @@ const port = process.env.PORT || 5000;
 require('dotenv').config();
 const connectDB = require('./config/db');
 
+app.use(express.json({ extended : false}))
+
 //Connect db
 connectDB();
 
