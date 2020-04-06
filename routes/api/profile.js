@@ -135,15 +135,12 @@ router.get('/user/:user_id', async (req, res) => {
 router.delete('/', auth, async (req, res) => {
     try {
         //Remove profile
-        await Profile.findOneAndRemove({user: req.params.user_id});
+        await Profile.findOneAndRemove({user: req.user.id});
         //
-        await User.findOneAndRemove({_id: req.params.user_id});
+        await User.findOneAndRemove({_id: req.user.id});
         res.json({msg: 'User Deleted'});
     } catch (err) {
         console.error(err.message);
-        if(err.name == 'CastError'){
-            return res.status(400).json({msg: 'Profile not found'});
-        }
         res.status(500).send('Server error');
     }
 });
