@@ -10,6 +10,7 @@
   "author": "Akash",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.1",
     "dotenv": "^8.2.0",
