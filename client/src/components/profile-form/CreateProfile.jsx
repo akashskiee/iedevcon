@@ -20,6 +20,8 @@ const CreateProfile = props => {
         github: ''
     });
 
+    const [displaySocialInputs, toggleSocialInputs] = useState(false);
+
     const {
         company,
         website,
@@ -129,10 +131,13 @@ const CreateProfile = props => {
             />
             <small className="form-text">Tell us a little about yourself</small>
           </div>
+
+
+          
   
           <div className="my-2">
             <button
-              // onClick={() => toggleSocialInputs(!displaySocialInputs)}
+              onClick={() => toggleSocialInputs(!displaySocialInputs)}
               type="button"
               className="btn btn-light"
             >
@@ -140,9 +145,9 @@ const CreateProfile = props => {
             </button>
             <span>Optional</span>
           </div>
-  
-         
-              <div className="form-group social-input">
+
+          {displaySocialInputs && <Fragment>
+            <div className="form-group social-input">
                 <i className="fab fa-twitter fa-2x" />
                 <input
                   type="text"
@@ -216,6 +221,10 @@ const CreateProfile = props => {
                   // onChange={onChange}
                 />
               </div>
+          </Fragment>}
+  
+         
+              
            
   
           <input type="submit" className="btn btn-primary my-1" />
