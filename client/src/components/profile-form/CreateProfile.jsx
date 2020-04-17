@@ -15,6 +15,7 @@ const CreateProfile = props => {
         medium: '',
         facebook: '',
         twitter: '',
+        youtube: '',
         instagram: '',
         linkedin: '',
         github: ''
@@ -33,10 +34,17 @@ const CreateProfile = props => {
         medium,
         facebook,
         twitter,
+        youtube,
         instagram,
         linkedin,
         github
     } = formData;
+
+    const onChange = e => setFormData({
+      ...formData,
+      [e.target.name] : [e.target.value]
+    })
+
     return (
         <Fragment>
         <h1 className="large text-primary">Edit Your Profile</h1>
@@ -46,7 +54,7 @@ const CreateProfile = props => {
         <small>* = required field</small>
         <form className="form" >
           <div className="form-group">
-            <select name="status" >
+            <select name="status" value={status} onChange={e => onChange(e)}>
               <option>* Select Professional Status</option>
               <option value="Developer">Developer</option>
               <option value="Junior Developer">Junior Developer</option>
@@ -66,8 +74,8 @@ const CreateProfile = props => {
               type="text"
               placeholder="Company"
               name="company"
-              // value={company}
-              // onChange={onChange}
+              value={company}
+              onChange={e => onChange(e)}
             />
             <small className="form-text">
               Could be your own company or one you work for
@@ -78,8 +86,8 @@ const CreateProfile = props => {
               type="text"
               placeholder="Website"
               name="website"
-              // value={website}
-              // onChange={onChange}
+              value={website}
+              onChange={e => onChange(e)}
             />
             <small className="form-text">
               Could be your own or a company website
@@ -90,8 +98,8 @@ const CreateProfile = props => {
               type="text"
               placeholder="Location"
               name="location"
-              // value={location}
-              // onChange={onChange}
+              value={location}
+              onChange={e => onChange(e)}
             />
             <small className="form-text">
               City & state suggested (eg. Boston, MA)
@@ -102,8 +110,8 @@ const CreateProfile = props => {
               type="text"
               placeholder="* Skills"
               name="skills"
-              // value={skills}
-              // onChange={onChange}
+              value={skills}
+              onChange={e => onChange(e)}
             />
             <small className="form-text">
               Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
@@ -114,8 +122,8 @@ const CreateProfile = props => {
               type="text"
               placeholder="Github Username"
               name="githubusername"
-              // value={githubusername}
-              // onChange={onChange}
+              value={githubusername}
+              onChange={e => onChange(e)}
             />
             <small className="form-text">
               If you want your latest repos and a Github link, include your
@@ -126,8 +134,8 @@ const CreateProfile = props => {
             <textarea
               placeholder="A short bio of yourself"
               name="bio"
-              // value={bio}
-              // onChange={onChange}
+              value={bio}
+              onChange={e => onChange(e)}
             />
             <small className="form-text">Tell us a little about yourself</small>
           </div>
@@ -153,8 +161,8 @@ const CreateProfile = props => {
                   type="text"
                   placeholder="Twitter URL"
                   name="twitter"
-                  // value={twitter}
-                  // onChange={onChange}
+                  value={twitter}
+                  onChange={e => onChange(e)}
                 />
               </div>
   
@@ -164,8 +172,8 @@ const CreateProfile = props => {
                   type="text"
                   placeholder="Facebook URL"
                   name="facebook"
-                  // value={facebook}
-                  // onChange={onChange}
+                  value={facebook}
+                  onChange={e => onChange(e)}
                 />
               </div>
   
@@ -175,8 +183,8 @@ const CreateProfile = props => {
                   type="text"
                   placeholder="YouTube URL"
                   name="youtube"
-                  // value={youtube}
-                  // onChange={onChange}
+                  value={youtube}
+                  onChange={e => onChange(e)}
                 />
               </div>
   
@@ -186,8 +194,8 @@ const CreateProfile = props => {
                   type="text"
                   placeholder="Linkedin URL"
                   name="linkedin"
-                  // value={linkedin}
-                  // onChange={onChange}
+                  value={linkedin}
+                  onChange={e => onChange(e)}
                 />
               </div>
   
@@ -197,8 +205,8 @@ const CreateProfile = props => {
                   type="text"
                   placeholder="Instagram URL"
                   name="instagram"
-                  // value={instagram}
-                  // onChange={onChange}
+                  value={instagram}
+                  onChange={e => onChange(e)}
                 />
               </div>
               <div className="form-group social-input">
@@ -207,8 +215,8 @@ const CreateProfile = props => {
                   type="text"
                   placeholder="Medium URL"
                   name="medium"
-                  // value={medium}
-                  // onChange={onChange}
+                  value={medium}
+                  onChange={e => onChange(e)}
                 />
               </div>
               <div className="form-group social-input">
@@ -217,8 +225,8 @@ const CreateProfile = props => {
                   type="text"
                   placeholder="Github URL"
                   name="github"
-                  // value={github}
-                  // onChange={onChange}
+                  value={github}
+                  onChange={e => onChange(e)}
                 />
               </div>
           </Fragment>}
