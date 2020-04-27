@@ -14,7 +14,7 @@ const Dashboard = ({getCurrentProfile, auth: {user}, profile: {profile, loading}
     Dashboard
     </h1>
     <p className="lead">
-        <i className="fas fa-user"> Welcome {user && user.data.name}</i>
+        <i className="fas fa-user"> Welcome {user && user.name}</i>
     </p>
     {profile !== null ? (<Fragment>Has</Fragment>) : 
     (<Fragment>
